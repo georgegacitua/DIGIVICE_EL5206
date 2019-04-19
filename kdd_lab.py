@@ -7,6 +7,8 @@ from sklearn.svm import SVC
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 
+#%%
+#Histograms
 def histogram(data, xlabel):
     """
     Generates the histogram for the data
@@ -26,7 +28,8 @@ def histogram(data, xlabel):
     plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)
     plt.show()
 
-
+#%%
+#Data Pre-Process
 def preprocess(data):
     """
     Does the preprocessing of the data
@@ -59,7 +62,8 @@ def preprocess(data):
 
     return data
 
-
+#%%
+#Normalization
 def normalize_column(data, *args):
     """
     Normalize the columns of a data frame
@@ -73,6 +77,7 @@ def normalize_column(data, *args):
 
     return data
 
+#%%
 # Names of the files
 raw_name = 'CREDITRISK_RAW.xlsx'
 score_name = 'CREDITRISK_SCORE.xlsx'
@@ -89,6 +94,7 @@ raw_data = raw_data.replace('', np.NaN).dropna()
 raw_data = raw_data.replace(' ', np.NaN).dropna()
 
 # Delete columns
+
 raw_data = raw_data.iloc[:, 1:]
 score_data = score_data.iloc[:, 1:]
 
@@ -137,7 +143,6 @@ plt.legend()
 plt.grid()
 plt.show()
 print('Done')
-
 
 msk = np.random.rand(len(raw_data)) < .6
 

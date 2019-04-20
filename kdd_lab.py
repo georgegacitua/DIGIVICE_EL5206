@@ -1,14 +1,27 @@
+"""
+Libraries
+"""
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import itertools
 
 from sklearn.decomposition import PCA, KernelPCA
 from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 
+from sklearn.neural_network import MLPClassifier
+
+
 #%%
-#Histograms
+"""
+Histograms
+"""
+
+
 def histogram(data, xlabel):
     """
     Generates the histogram for the data
@@ -29,7 +42,11 @@ def histogram(data, xlabel):
     plt.show()
 
 #%%
-#Data Pre-Process
+"""
+Data Pre-Process
+"""
+
+
 def preprocess(data):
     """
     Does the preprocessing of the data
@@ -63,7 +80,10 @@ def preprocess(data):
     return data
 
 #%%
-#Normalization
+"""
+Normalization  
+"""
+
 def normalize_column(data, *args):
     """
     Normalize the columns of a data frame
@@ -78,6 +98,47 @@ def normalize_column(data, *args):
     return data
 
 #%%
+"""
+Plot Confusion Matrix
+"""
+
+def plot_confusion_matrix(cm, classes,
+                          normalize=False,
+                          title='Confusion matrix',
+                          cmap=plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting `normalize=True`.
+    """
+
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+
+    print(cm)
+
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45)
+    plt.yticks(tick_marks, classes)
+
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        plt.text(j, i, format(cm[i, j], fmt),
+                 horizontalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
+
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    plt.tight_layout()
+
+#%%
+
 # Names of the files
 raw_name = 'CREDITRISK_RAW.xlsx'
 score_name = 'CREDITRISK_SCORE.xlsx'
@@ -119,10 +180,11 @@ histogram(raw_data['Monto solicitado'], 'Monto Solicitado')
 """
 Normalize some columns
 """
-raw_data = normalize_column(raw_data, 'RENTA', 'EDAD', 'Monto Deuda Promedio', 'Monto solicitado',
+raw_data = normalize_column(raw_data, 'RENTA', 'COD_COM',  'Monto Deuda Promedio', 'Monto solicitado', 'Días de Mora',
                             'Crédito_1', 'Crédito_2', 'Crédito_3', 'Crédito_4', 'Número de meses inactivo',
                             'numero de cuotas')
 
+#%%
 """
 Do a principal component analysis (PCA)
 """
@@ -144,24 +206,56 @@ plt.grid()
 plt.show()
 print('Done')
 
-msk = np.random.rand(len(raw_data)) < .6
+#%%
+"""
+Support Vector Classification
+"""
 
-train = raw_data[msk]
-test = raw_data[~msk]
-labels_train = results[msk]
-labels_test = results[~msk]
+train, test, labels_train, labels_test = train_test_split( raw_data, results, test_size = .7, stratify = results)
 
-msk_test = np.random.rand(len(test)) < .5
-
-validation = test[~msk_test]
-
-labels_validation = labels_test[~msk_test]
-
-labels_test = labels_test[msk_test]
-test = test[msk_test]
+print( "Using SVC \n")
 clf = SVC(gamma='auto')
 clf.fit(train, labels_train)
 
-predictions = clf.predict(validation)
+predictions = clf.predict(test)
 
-print(classification_report(labels_validation, predictions))
+#%%
+"""
+Results
+"""
+
+accuracy = accuracy_score(labels_test, predictions)
+print("accuracy with SVC: ", accuracy, '%\n')
+
+print("Reporte:\n", classification_report(labels_test, predictions))
+
+conf_matrix = confusion_matrix(labels_test, predictions)
+
+plt.clf()
+plot_confusion_matrix(conf_matrix, classes = np.array(['Pagan','No Pagan']), normalize = True, title = 'Normalized Confusion Matrix for SVC')
+plt.show()
+
+#%%
+"""
+Multi-Layer Perceptron
+"""
+print( "Using MLP \n")
+clf_mlp =MLPClassifier(hidden_layer_sizes=(100,),activation='relu', solver='adam',max_iter= 200)
+
+clf_mlp.fit(train,labels_train)
+
+labels_pred=clf_mlp.predict(test)
+
+#%%
+"""
+Results
+"""
+
+accuracy_mlp = accuracy_score(labels_test,labels_pred)
+print ("accuracy with MLP:\n", accuracy_mlp)
+
+conf_matrix_mlp = confusion_matrix(labels_test, labels_pred)
+
+plt.clf()
+plot_confusion_matrix(conf_matrix_mlp, classes = np.array(['Pagan','No Pagan']), normalize = True, title = 'Normalized Confusion Matrix for MLP')
+plt.show()

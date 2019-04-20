@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9186bdb1-3e34-4a51-b8b3-4f98dca8c39d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/kdd_lab.py" beforeDir="false" afterPath="$PROJECT_DIR$/kdd_lab.py" afterDir="false" />
-    </list>
+    <list default="true" id="9186bdb1-3e34-4a51-b8b3-4f98dca8c39d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,12 +151,12 @@
       <workItem from="1555641307742" duration="723000" />
       <workItem from="1555642095948" duration="18000" />
       <workItem from="1555642132255" duration="1618000" />
-      <workItem from="1555713189498" duration="6989000" />
+      <workItem from="1555713189498" duration="7016000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9348000" />
+    <option name="totallyTimeSpent" value="9375000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />

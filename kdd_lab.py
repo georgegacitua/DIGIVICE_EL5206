@@ -213,7 +213,6 @@ Support Vector Classification
 
 train, test, labels_train, labels_test = train_test_split( raw_data, results, test_size = .7, stratify = results)
 
-print( "Using SVC \n")
 clf = SVC(gamma='auto')
 clf.fit(train, labels_train)
 

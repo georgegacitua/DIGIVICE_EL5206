@@ -15,6 +15,10 @@ from sklearn.model_selection import train_test_split
 
 from sklearn.neural_network import MLPClassifier
 
+from sklearn.linear_model import LogisticRegression
+
+from sklearn.svm import LinearSVC
+
 
 #%%
 """
@@ -239,7 +243,7 @@ plt.show()
 Multi-Layer Perceptron
 """
 print( "Using MLP \n")
-clf_mlp =MLPClassifier(hidden_layer_sizes=(100,),activation='relu', solver='adam',max_iter= 200)
+clf_mlp = MLPClassifier(hidden_layer_sizes=(100,),activation='relu', solver='adam',max_iter= 200)
 
 clf_mlp.fit(train,labels_train)
 
@@ -257,4 +261,29 @@ conf_matrix_mlp = confusion_matrix(labels_test, labels_pred)
 
 plt.clf()
 plot_confusion_matrix(conf_matrix_mlp, classes = np.array(['Pagan','No Pagan']), normalize = True, title = 'Normalized Confusion Matrix for MLP')
+plt.show()
+
+
+#%%
+"""
+Linear Classifier
+"""
+print( "Using Linear Classifier \n")
+clf_logistic = LogisticRegression(random_state=0, solver='lbfgs')
+
+clf_logistic.fit(train, labels_train)
+
+linear_prediction = clf_logistic.predict(test)
+
+#%%
+"""
+Results
+"""
+accuracy_logistic = accuracy_score(labels_test, linear_prediction)
+print ("accuracy with Logistic Classifier:\n", accuracy_logistic)
+
+conf_matrix_logistic = confusion_matrix(labels_test, linear_prediction)
+
+plt.clf()
+plot_confusion_matrix(conf_matrix_logistic, classes = np.array(['Pagan', 'No Pagan']), normalize = True, title ='Normalized Confusion Matrix for Logistic Classifier')
 plt.show()

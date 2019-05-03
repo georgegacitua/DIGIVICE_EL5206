@@ -166,6 +166,12 @@ score_data = score_data.iloc[:, 1:]
 # Do preprocessing
 raw_data = preprocess(raw_data)
 
+score_data = preprocess(score_data)
+
+score_data.drop('PAGA', axis=1, inplace=True)
+score_data = score_data.replace('', np.NaN).dropna()
+score_data = score_data.replace(' ', np.NaN).dropna()
+
 # Obtain the results
 results = raw_data['PAGA'].reset_index().drop('index', axis=1)
 raw_data.drop('PAGA', axis=1, inplace=True)
@@ -185,6 +191,10 @@ histogram(raw_data['Monto solicitado'], 'Monto Solicitado')
 Normalize some columns
 """
 raw_data = normalize_column(raw_data, 'RENTA', 'COD_COM',  'Monto Deuda Promedio', 'Monto solicitado', 'Días de Mora',
+                            'Crédito_1', 'Crédito_2', 'Crédito_3', 'Crédito_4', 'Número de meses inactivo',
+                            'numero de cuotas')
+
+score_data = normalize_column(score_data, 'RENTA', 'COD_COM',  'Monto Deuda Promedio', 'Monto solicitado', 'Días de Mora',
                             'Crédito_1', 'Crédito_2', 'Crédito_3', 'Crédito_4', 'Número de meses inactivo',
                             'numero de cuotas')
 
@@ -243,13 +253,12 @@ plt.show()
 Multi-Layer Perceptron
 """
 print( "Using MLP \n")
-clf_mlp = MLPClassifier(hidden_layer_sizes=(100,),activation='relu', solver='adam',max_iter= 200)
+clf_mlp = MLPClassifier(hidden_layer_sizes=(100,2),activation='relu', solver='adam', max_iter= 600)
 
 clf_mlp.fit(train,labels_train)
 
 labels_pred=clf_mlp.predict(test)
 
-#%%
 """
 Results
 """
@@ -286,4 +295,21 @@ conf_matrix_logistic = confusion_matrix(labels_test, linear_prediction)
 
 plt.clf()
 plot_confusion_matrix(conf_matrix_logistic, classes = np.array(['Pagan', 'No Pagan']), normalize = True, title ='Normalized Confusion Matrix for Logistic Classifier')
+plt.show()
+
+#%%
+"""
+Score predictions
+"""
+
+score_prediction_labels=clf_mlp.predict(score_data)
+
+labels = ['Paga', 'No Paga']
+sizes = [(score_prediction_labels == 1).sum(),(score_prediction_labels == 0).sum()]
+colors = ['royalblue', 'coral']
+plt.pie(sizes, labels=labels, colors=colors,
+autopct='%1.1f%%', shadow=True, startangle=90)
+plt.legend(labels, loc="best")
+plt.axis('equal')
+plt.tight_layout()
 plt.show()

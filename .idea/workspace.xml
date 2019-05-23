@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9186bdb1-3e34-4a51-b8b3-4f98dca8c39d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kdd_lab.py" beforeDir="false" afterPath="$PROJECT_DIR$/kdd_lab.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/kdd_lab.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="314" column="10" lean-forward="true" selection-start-line="314" selection-start-column="10" selection-end-line="314" selection-end-column="10" />
+            <state relative-caret-position="1770">
+              <caret line="299" selection-start-line="299" selection-end-line="299" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
               </folding>
@@ -162,18 +161,18 @@
       <workItem from="1556571463356" duration="1722000" />
       <workItem from="1556575784836" duration="507000" />
       <workItem from="1556908480222" duration="1636000" />
-      <workItem from="1556918912700" duration="2873000" />
+      <workItem from="1556918912700" duration="2999000" />
+      <workItem from="1556932177252" duration="74000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17664000" />
+    <option name="totallyTimeSpent" value="17864000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1502146" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15236051" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -215,8 +214,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/kdd_lab.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="314" column="10" lean-forward="true" selection-start-line="314" selection-start-column="10" selection-end-line="314" selection-end-column="10" />
+        <state relative-caret-position="1770">
+          <caret line="299" selection-start-line="299" selection-end-line="299" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
           </folding>
